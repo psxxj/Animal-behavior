@@ -66,3 +66,7 @@ div > strong {
     font-size: 70px;
     font-style: oblique;
 }
+
+.Upload {
+    display:flex;
+}

@@ -4,17 +4,22 @@
     width: 100px;
     border-radius: 100%;
     border: none;
-    background-color: rgba(87, 15, 15, 0.5);
+    background-color: rgba(124, 24, 24, 0.5);
     color: white;
     font-size: 16px;
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     cursor: pointer;
 }
 
+.Login > button:hover {
+    font-weight: 500;
+    border-style: double;
+}
+
 .LoginDetail  {
     margin-left: 30px;
     height: 100px;
-    width: 500px;
+    width: 550px;
     border-radius: 50px;
     border: none;
     background-color: rgba(87, 15, 15, 0.5);
@@ -39,7 +44,7 @@
     border-radius: 15px;
 }
 
-.LoginInput > input::placeholder {
+.LoginInput > input::placeholder, .pwcheck > input::placeholder {
     font-style: italic;
 }
 
@@ -53,5 +58,17 @@
     font-style: italic;
     margin: 15px 10px;
     height: 30px;
-    width: 55px;
+    width: 80px;
+}
+
+.pwcheck {
+    text-align: right;
+}
+
+.pwcheck > input {
+    height: 30px;
+    background-color: white;
+    border: none;
+    border-radius: 15px;
+    margin-right: 10px;
 }

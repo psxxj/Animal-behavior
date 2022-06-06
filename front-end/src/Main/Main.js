@@ -5,6 +5,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "./Main.css";
 import Intro from "./Intro.js";
+import Upload from "./Upload.js";
 
 // import required modules
 import { Pagination } from "swiper";
@@ -31,7 +32,8 @@ const Main = () => {
         </div>
       </SwiperSlide>
       <SwiperSlide><Intro /></SwiperSlide>
-      <SwiperSlide>Option</SwiperSlide>
+      <SwiperSlide><Upload /></SwiperSlide>
+      <SwiperSlide>Result</SwiperSlide>
     </Swiper>
     </div>
   );
