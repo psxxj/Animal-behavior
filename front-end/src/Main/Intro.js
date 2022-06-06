@@ -1,11 +1,12 @@
 import "./Intro.css";
-import Image1 from '../img/step01.JPG';
+import Image1 from '../img/step1.png';
+import { useState } from "react";
 
-const Step = ({img, num, subtitle}) => {
+const Step = ({img, num, subtitle, text}) => {
     return (
       <div class = "step">
         <div class = "step_img">
-          <img src = {img} />
+          <img src = {img} alt = "step_img" />
         </div>
         <div class = "step-A">
           <div class = "title">
@@ -17,7 +18,7 @@ const Step = ({img, num, subtitle}) => {
         </div>
         <div class = "step-B">
           <div class = "detailtext">
-          간단한 프로그래밍(기초적인 코딩 위주) 예제 소스 코드와 언어들의 기초 강좌, 소프트웨어, 웹 디자인과 관련된 내용. 그래픽에 쓸 수 있는 색상표와, 각종 프로그램들의 사용법 설명, 웹 브라우저에서 각종 단위를 환산하는 계산기/변환기 등.
+          {text}
           </div>
         </div>
       </div>
@@ -25,6 +26,20 @@ const Step = ({img, num, subtitle}) => {
 }
 
 const Intro = () => {
+  const [visible, setVisible] = useState(1);
+  const text1 = "detail for STEP 1";
+  const text2 = "detail for STEP 2";
+  const text3 = "detail for STEP 3";
+
+  function movePage(type) {
+    if(type === 'prev' && visible !== 1){
+      setVisible(visible - 1);
+    }
+    if(type === 'next' && visible !== 3){
+      setVisible(visible + 1);
+    }
+  }
+
   return (
     <div class = "intro">
         <div class = "left-box">
@@ -36,14 +51,16 @@ const Intro = () => {
             <div class = "h1_text"> The cool AI is designed for taking over your hardwork. </div>
             <div class = "h1_text"> Just handle it on our <span> "B-fact" </span> now. </div>
             <div class = "intro_bttn">
-              <button> Prev. </button>
-              <button> Next. </button>
+              <button onClick = {() => movePage('prev')}> Prev. </button>
+              <button onClick = {() => movePage('next')} > Next. </button>
             </div>
 
 
         </div>
         <div class = "right-box">
-          <Step img = {Image1} num = "1" subtitle = "Prepare the Mouse's Video"/>
+          {visible === 1 && <Step img = {Image1} num = "1" subtitle = "Prepare the Mouse's Video" text = {text1}/>}
+          {visible === 2 && <Step img = {Image1} num = "2" subtitle = "Set the Mouse's Info" text = {text2}/>}
+          {visible === 3 && <Step img = {Image1} num = "3" subtitle = "Explore the Result" text = {text3}/>}
         </div>
     </div>
   );

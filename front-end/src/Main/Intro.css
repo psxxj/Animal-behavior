@@ -55,12 +55,14 @@
   position: relative;
   top: 30px;
   text-align: left;
-  font-size: 20px;
+  font-size: 25px;
+  font-weight: 620;
 }
 
 .detailtext {
-  margin-left: 60px;
+  margin-left: 55px;
   text-align: left;
+  font-size: 20px;
 }
 
 h1 {
