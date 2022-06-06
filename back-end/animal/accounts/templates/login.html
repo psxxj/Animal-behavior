@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block content %}
+<div class="wrapper">
+    <div style="text-align: center;">
+        <h1>로그인</h1>
+        <form method="POST">
+            {% include "form_errors.html" %}
+            {% csrf_token %}
+            아이디:
+            <br>
+            <input type="text" class="form-control" name="username" id="username"
+                   value="{{ form.username.value|default_if_none:'' }}">
+            <br>
+            비밀번호:
+            <br>
+            <input type="password" class="form-control" name="password" id="password"
+                   value="{{ form.password.value|default_if_none:'' }}">
+            <br><br>
+            <input type="submit" class="btn btn-primary" value="Login">
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% for message in messages %}
+    <div class="alert {{ message.tags }} alert-auto-dismissible alert-dismissible notification-container text-center" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        {{ message }}
+    </div>
+{% endfor %}

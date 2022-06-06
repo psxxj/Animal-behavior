@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block content %}
+<div class="wrapper" style="text-align: center;">
+    <h1>회원가입</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {% include "form_errors.html" %}
+        아이디: <br>
+         <input type="text" class="form-control" name="username" id="username"
+                   value="{{ form.username.value|default_if_none:'' }}">
+        <br>
+        비밀번호: <br>
+         <input type="password" class="form-control" name="password1" id="password1"
+                   value="{{ form.password1.value|default_if_none:'' }}">
+        비밀번호는 8자리 이상
+        <br>
+        비밀번호 확인: <br>
+        <input type="password" class="form-control" name="password2" id="password2"
+                   value="{{ form.password2.value|default_if_none:'' }}">
+
+        <br>
+        이메일: <br>
+        <input type="text" class="form-control" name="email" id="email"
+                   value="{{ form.email.value|default_if_none:'' }}">
+        <br><br>
+        <input type="submit" class="btn btn-primary" value="Sign Up">
+    </form>
+</div>
+{% endblock %}
+
+{% for message in messages %}
+    <div class="alert {{ message.tags }} alert-auto-dismissible alert-dismissible notification-container text-center" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        {{ message }}
+    </div>
+{% endfor %}
