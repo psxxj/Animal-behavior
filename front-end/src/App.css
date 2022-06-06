@@ -1,0 +1,30 @@
+.Fullpage {
+  text-align: center;
+  background-image: url('./img/mouse.jpg');
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.topbar {
+  min-height: 30px;
+  height: 8vh;
+  border-bottom: outset rgb(158, 106, 106) 1px;
+  padding: 0% 10%;
+  display: flex;
+  flex-direction: row;
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+.Main {
+  height: 77vh;
+}
+
+.Login {
+  min-height: 40px;
+  height: 15vh;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  vertical-align: middle;
+}
+

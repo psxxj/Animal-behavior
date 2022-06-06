@@ -1,0 +1,97 @@
+.left-box {
+  margin-right: 50px;
+  vertical-align: middle;
+  border-left: double 1px;
+  border-right: double 1px;
+}
+
+.left-box, .right-box {
+  width: 35vw;
+  height: 60vh;
+  position: flex;
+  min-width: 400px;
+}
+
+.left-box > .h1_text {
+  font-size: 17px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.left-box span {
+  font-style: oblique;
+  font-size: 19px;
+} 
+
+.step {
+  height: 100%;
+  vertical-align: middle;
+}
+
+.step_img {
+  height: 50%;
+}
+
+.step-A {
+  height: 20%;
+  display: flex;
+  color: rgb(51, 0, 0); 
+}
+
+.step-B {
+  height: 30%;
+  position: relative;
+  display: flex;
+}
+
+.title {
+  margin-right: 30px;
+  text-align: left;
+  font-size: 65px;
+  font-weight: 600;
+  font-style: italic;
+}
+
+.subtitle {
+  position: relative;
+  top: 30px;
+  text-align: left;
+  font-size: 20px;
+}
+
+.detailtext {
+  margin-left: 60px;
+  text-align: left;
+}
+
+h1 {
+  margin: 10% 0% 0% 0%;
+  font-size: 100px;
+  font-style: oblique;
+  color: rgb(51, 0, 0);
+}
+
+#h1_sub {
+  font-size: 30px;
+  font-style: italic;
+  font-weight: 300;
+  margin-bottom: 10%;
+}
+
+.intro_bttn {
+  margin-top: 10%;
+}
+
+.intro_bttn > button {
+  border: none;
+  cursor: pointer;
+  height: 30px;
+  margin: 10px 15px 0px 15px;
+  background-color: rgba(51, 0, 0, 0);
+  font-size: 25px;
+  font-style: italic;
+}
+
+.intro_bttn > button:hover {
+  font-weight: 600;
+  color: rgb(51, 0, 0);
+}
