@@ -1,0 +1,7 @@
+numpy
+django
+torch
+cv2
+os
+glob
+torchvision
