@@ -19,7 +19,6 @@ class DocumentListCreate(generics.ListCreateAPIView):
     serializer_class = DocumentSerializer
 
 def uploadFile(request):
-    template_name = 'video_upload.html'
     if request.method == "POST":
         if request.user.is_authenticated:
             if 'uploadedFile' in request.FILES:
@@ -29,7 +28,6 @@ def uploadFile(request):
                 Heredity = request.POST["Heredity"]
                 Genotype= request.POST["Genotype"]
                 uploadedFile = request.FILES["uploadedFile"]
-                print(uploadedFile)
                 user = request.user
                 # Saving the information in the database
                 document = Document(
@@ -41,22 +39,24 @@ def uploadFile(request):
                     user = user,
                 )
                 document.save()
-            else :
+                key = document.pk
+                print(key)
+                return render(request, "predict.html", context={'key': key})
+            else:
                 messages.add_message(
                     request,
                     messages.ERROR,
                     'Input not exist'
                 )
+                return render(request, "video_upload.html")
         else:
             messages.add_message(
                 request,
                 messages.ERROR,
                 'Login First'
             )
-    documents = Document.objects.all()
-    return render(request, "video_upload.html", context={
-        "files": documents
-    })
+            return render(request, "video_upload.html")
+    return render(request, "video_upload.html")
 
 
 def download(request, id):
@@ -71,6 +71,7 @@ def download(request, id):
 
 def predict(request, id):
     file = Document.objects.get(id=id)
+    key = file.pk
     mouse_name = file.mouse_name
     if not mouse_name:
         mouse_name = str(file.uploadedFile).split('.')[0]
@@ -91,7 +92,8 @@ def predict(request, id):
                          skip_frame=5)
 
     frame_lists = os.listdir(temp_dir)
-    sorted_frame_list = sorted([int(x.split("_")[-1].split('.png')[0]) for x in frame_lists])
+    sorted_frame_list = sorted([np.uint(x.split("_")[-1].split('.png')[0]) for x in frame_lists])
+
     images_list = []
     for file in sorted_frame_list:
         images_list.append(f'{mouse_name}_{file}.png')
@@ -101,8 +103,8 @@ def predict(request, id):
 
     #dataset reading
     test_dataset = MouseDataset(path=temp_dir,
-                                      img_list=images_list,
-                                      transform=get_transform())
+                                img_list=images_list,
+                                transform=get_transform())
 
     # loading the model
     model = torch.load(ai_model, map_location=torch.device('cpu'))
@@ -112,10 +114,10 @@ def predict(request, id):
         class_to_int = {classes[i]: i for i in range(len(classes))}
 
     prediction = []
-    for i in range(len(images_list)-1):
+    for i in range(len(test_dataset)):
         img = test_dataset[i]
         prediction.append(predict_image(img, model, classes))
-
+        print(i)
     result = pd.DataFrame(prediction)
 
     csv_path = os.path.join(settings.MEDIA_ROOT, 'Predicted Files')
@@ -124,12 +126,15 @@ def predict(request, id):
     csv_path2 = f'{csv_path}/{request.user.username}_{mouse_name}_behaviour_sequence.xlsx'
     # saving cvs file
     result.to_excel(csv_path2)
-    return render(request, "video_upload.html", context={"files": csv_path})
+    return render(request, "download.html", context={"key": key})
 
 
-def visualization(request, frame_rate=5):
+def visualization(request, id):
     # file path = csv file path
-    mouse_name='jerry'
+    frame_rate = 5
+    file = Document.objects.get(id=id)
+    key = file.pk
+    mouse_name = file.mouse_name
     file_path = f'{settings.MEDIA_ROOT}/Predicted Files/{request.user.username}_{mouse_name}_behaviour_sequence.xlsx'
     excel_file = pd.read_excel(file_path)
     #frame_labels = excel_file['labels']
@@ -138,7 +143,7 @@ def visualization(request, frame_rate=5):
     # frequency of predicted labels
     predicted_lab_freq_dict = {i: len(frame_labels[frame_labels == i]) for i in classes}
     predicted_lab_freq = list(predicted_lab_freq_dict.values())
-    s= np.sum(predicted_lab_freq)
+    s = np.sum(predicted_lab_freq)
     relative_freq_dict = [format((( i * 100) / s), '.2f') for i in predicted_lab_freq_dict.values()]
     relative_freq_array = np.array(relative_freq_dict)
 
