@@ -10,7 +10,7 @@ urlpatterns = [
     path("", uploadFile, name="uploadFile"),
     path('download/<int:id>/', download, name="download"),
     path('predict/<int:id>/', predict, name="predict"),
-    path('visualization/', visualization, name="visualization"),
+    path('visualization/<int:id>/', visualization, name="visualization"),
 ]
 
 
