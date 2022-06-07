@@ -5,6 +5,6 @@ from .models import *
 class DocumentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Document
-        fields = ('id', 'mouse_name', 'experimental_model', 'Heredity', 'Genotype', 'uploadedFile', 'dateTimeOfUpload', 'user_id')
+        fields = ('id', 'mouse_name', 'experimental_model', 'Heredity', 'Genotype', 'uploadedFile', 'dateTimeOfUpload', 'user_id', 'predicted_file')
 
          
