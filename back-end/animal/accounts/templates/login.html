@@ -7,12 +7,12 @@
         <form method="POST">
             {% include "form_errors.html" %}
             {% csrf_token %}
-            아이디:
+            email:
             <br>
-            <input type="text" class="form-control" name="username" id="username"
+            <input type="username" class="form-control" name="email" id="email"
                    value="{{ form.username.value|default_if_none:'' }}">
             <br>
-            비밀번호:
+            password:
             <br>
             <input type="password" class="form-control" name="password" id="password"
                    value="{{ form.password.value|default_if_none:'' }}">
