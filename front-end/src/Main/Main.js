@@ -1,4 +1,4 @@
-import { Swiper, SwiperSlide } from "swiper/react";
+import { useSwiper, Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
 import "swiper/css";
@@ -8,18 +8,25 @@ import Intro from "./Intro.js";
 import Upload from "./Upload.js";
 
 // import required modules
-import { Pagination } from "swiper";
+import SwiperCore, { Pagination, Mousewheel, Navigation } from "swiper";
+
+SwiperCore.use([Mousewheel, Pagination, Navigation]);
 
 const Main = () => {
+
     return (
     <div class = "Main">
     <Swiper
       direction={"vertical"}
+      speed={800}
+      modules={[Pagination]}
+      mousewheel
+      autoplay={false}
       pagination={{
         clickable: true
       }}
-      modules={[Pagination]}
       className="mySwiper"
+      touchRatio={0}
     >
       <SwiperSlide>
         <div class = "start">

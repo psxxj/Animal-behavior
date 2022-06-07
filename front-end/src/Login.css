@@ -72,3 +72,8 @@
     border-radius: 15px;
     margin-right: 10px;
 }
+
+.bttn > button:hover {
+    background-color: rgb(255, 235, 239);
+    cursor: pointer;
+}
