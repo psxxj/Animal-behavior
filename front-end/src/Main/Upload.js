@@ -4,7 +4,7 @@ import { useState } from 'react';
 const Option = ({optionName, dbName, example}) => {
   return (
     <div class = "option">
-      <input type="text" id = "option" name = {dbName} placeholder = {"ex) " + example} />
+      <input type="text" name = {dbName} placeholder = {"ex) " + example} />
       <div> {optionName} </div>
     </div>
   );
@@ -17,8 +17,11 @@ const Upload = () => {
     <div class= "Upload">
       <div class = "left">
         <label htmlFor = "drop">
-          <div class = "drop_box">
-            {!upload ? "Click the Area to Upload" : document.getElementsByClassName('uploadedFile')[0].files[0].name}
+          <div class = {!upload ? "drop_box" : "drop_box_selected"}>
+            <div>
+              {!upload ? "Click the Area to Upload" : document.getElementsByClassName('uploadedFile')[0].files[0].name}<br />
+              <span>{upload ? "" : ".mp4 or .avi"} </span>
+            </div>
           </div>
         </label>
         <input type="file" name="uploadedFile" class = "uploadedFile" id = "drop" onChange = {() => setUpload(true)} multiple = {false} accept=".mp4, .avi"/>

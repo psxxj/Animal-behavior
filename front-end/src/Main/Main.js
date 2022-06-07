@@ -1,4 +1,4 @@
-import { useSwiper, Swiper, SwiperSlide } from "swiper/react";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
 import "swiper/css";
@@ -6,11 +6,12 @@ import "swiper/css/pagination";
 import "./Main.css";
 import Intro from "./Intro.js";
 import Upload from "./Upload.js";
+import Result from "./Result.js";
 
 // import required modules
-import SwiperCore, { Pagination, Mousewheel, Navigation } from "swiper";
+import SwiperCore, { Keyboard, Pagination, Mousewheel, Navigation } from "swiper";
 
-SwiperCore.use([Mousewheel, Pagination, Navigation]);
+SwiperCore.use([Keyboard, Mousewheel, Pagination, Navigation]);
 
 const Main = () => {
 
@@ -22,6 +23,9 @@ const Main = () => {
       modules={[Pagination]}
       mousewheel
       autoplay={false}
+      keyboard={{
+        enabled: true
+      }}
       pagination={{
         clickable: true
       }}
@@ -40,7 +44,7 @@ const Main = () => {
       </SwiperSlide>
       <SwiperSlide><Intro /></SwiperSlide>
       <SwiperSlide><Upload /></SwiperSlide>
-      <SwiperSlide>Result</SwiperSlide>
+      <SwiperSlide><Result /></SwiperSlide>
     </Swiper>
     </div>
   );

@@ -1,0 +1,97 @@
+.Rtop {
+    width: 65vw;
+    height: 10vh;
+    min-height: 90px;
+    font-size: 40px;
+    margin-bottom: 30px;
+    border-bottom: solid 2px;
+    text-align: left;
+    display: flex;
+}
+
+.mainTitle {
+    font-size: 70px;
+    font-weight: 500;
+}
+
+.Rtop > div:nth-child(2){
+    width: 5%
+}
+
+.Rtop .csv_icon{
+    background-image: url('../img/csvicon.png');
+    background-size: cover;
+    height: 90px;
+    width: 90px;
+    border: 5px;
+    border-radius: 5px;
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+.Rbottom > .swiper {
+  width: 45vw;
+  height: 45vh;
+  min-height: 300px;
+  min-width: 500px;
+  margin: 0% 10% 0% 10%;
+}
+
+.Rbottom .swiper-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  border: solid 3px;
+  font-size: 22px;
+  font-weight: bold;
+  color: rgb(51, 0, 0);
+  padding: 5%;
+}
+
+.Rbottom .swiper-slide:nth-child(1n), .Rbottom .swiper-slide:nth-child(3n) {
+  background-color: rgb(255, 240, 240);
+}
+
+.Rbottom .swiper-slide:nth-child(2n), .Rbottom .swiper-slide:nth-child(4n) {
+  background-color: rgb(240, 255, 240);
+}
+
+.Rbottom .swiper-slide:nth-child(1n) > h1 {
+    font-size: 80px;
+    font-style: oblique;
+    font-weight: 400;
+    color: rgb(51, 0, 0);
+  }
+
+.resultDetail {
+    height: 100%;
+    width: 100%;
+}
+
+.resultDetail > .image {
+    height: 85%;
+}
+
+.resultDetail > .text_r {
+    display: flex;
+    height: 15%;
+}
+
+.resultDetail > .text_r > div:nth-child(1) {
+    font-size: 35px;
+    font-weight: 400;
+}
+
+.resultDetail > .text_r > div:nth-child(1) > sup {
+    font-size: 15px;
+    margin-left: -8px;
+    font-style: italic;
+}
+
+.resultDetail > .text_r > div:nth-child(2) {
+    font-size: 20px;
+    font-weight: 400;
+    padding-top: 15px;
+    padding-left: 30px;
+}
