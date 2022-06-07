@@ -1,5 +1,5 @@
 import shutil
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 import mimetypes
 from django.http import FileResponse
 from django.http.response import HttpResponse
@@ -149,8 +149,9 @@ def visualization(request, id):
 
 
     plt.figure(figsize=(15, 15))
+    plt.subplot()
+    plt.title("Relative frequency distribution of animal behavior")
     plt.pie(relative_freq_array, labels=classes)
-
     plot_path = os.path.join(settings.MEDIA_ROOT, 'Visual Files')
     if not os.path.exists(plot_path):
         os.makedirs(plot_path)
@@ -158,16 +159,41 @@ def visualization(request, id):
     plt.savefig(plot_path1)
 
     # bar plot
+    plt.figure(figsize=(15, 15))
+    plt.subplot()
     sns.histplot(frame_labels, color='red', pmax=np.max(predicted_lab_freq))
     plt.xticks(rotation=75)
+    plt.xlabel("Behavior")
+    plt.ylabel("Frequency of behavior")
+    plt.title("Frequency of behavior sequence")
     plot_path2 = os.path.join(plot_path, f'{request.user.username}_{mouse_name}_hist_plot.png')
     plt.savefig(plot_path2)
 
+    plt.figure(figsize=(15, 15))
+    plt.subplot()
     # creating sequence for all class
     all_binary_sequence = [np.uint8(frame_labels == i) for i in classes]
-    for seq, i in (all_binary_sequence, classes):
-        plt.plot(seq, labels=i)
+    for i in range(len(all_binary_sequence)):
+        seq = [k*(i+1) if k != 0 else k+i for k in all_binary_sequence[i]]
+        plt.fill(seq, label=classes[i])
+    plt.xlabel("Frame")
+    plt.ylabel("Behavior")
+    plt.title("Behavior Sequence vs Frame")
     plt.legend()
     plot_path3 = os.path.join(plot_path, f'{request.user.username}_{mouse_name}_sequence_plot.png')
     plt.savefig(plot_path3)
+
+    plt.figure(figsize=(15, 15))
+    plt.subplot()
+    for i in range(len(all_binary_sequence)):
+        seq = [k * (i + 1) if k != 0 else k + i for k in all_binary_sequence[i]]
+        plt.plot(seq, label=classes[i])
+    plt.xlabel("Frame")
+    plt.ylabel("Behavior")
+    plt.title("Behavior Sequence vs Frame")
+    plt.legend()
+    plot_path4 = os.path.join(plot_path, f'{request.user.username}_{mouse_name}_sequence_plot2.png')
+    plt.savefig(plot_path4)
+
+    return redirect('/')
 
