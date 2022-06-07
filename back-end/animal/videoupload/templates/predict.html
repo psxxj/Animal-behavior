@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block content%}
+    <form action="" method="POST" enctype="multipart/form-data">
+        <input type="text" name="mouse_name" placeholder="Enter a mouse name">
+        <input type="text" name="experimental_model" placeholder="Enter a Experimental model">
+        <input type="text" name="Heredity" placeholder="Enter a Heredity">
+        <input type="text" name="Genotype" placeholder="Enter a Genotype">
+        <input type="file" name="uploadedFile">
+        {% csrf_token %}
+        <input type="submit" value="Upload">
+    </form>
+   <div>
+        <label>Convert your video to csv file with our ai model </label>
+        	<form action="{% url 'videoupload:predict' key %}">
+        	<input type="submit" value ="predict">
+    		</form>
+  </div>
+{% endblock %}
