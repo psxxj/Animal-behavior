@@ -18,9 +18,8 @@ def signup(request):
         if len(request.POST['password1']) > 7:
             if request.POST['password1'] == request.POST['password2']:
                 user = User.objects.create_user(
-                                            username=request.POST['username'],
-                                            password=request.POST['password1'],
-                                            email=request.POST['email'],)
+                                            username=request.POST['email'],
+                                            password=request.POST['password1'],)
                 auth.login(request, user)
                 messages.add_message(
                     request,
@@ -49,7 +48,7 @@ def signup(request):
 # 로그인
 def login(request):
     if request.method == 'POST':
-        username = request.POST['username']
+        username = request.POST['email']
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
         if user is not None:
