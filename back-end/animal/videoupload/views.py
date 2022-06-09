@@ -40,8 +40,7 @@ def uploadFile(request):
                 )
                 document.save()
                 key = document.pk
-                print(key)
-                return render(request, "predict.html", context={'key': key})
+                return predict(request,key)
             else:
                 messages.add_message(
                     request,
@@ -117,8 +116,11 @@ def predict(request, id):
     for i in range(len(test_dataset)):
         img = test_dataset[i]
         prediction.append(predict_image(img, model, classes))
-        print(i)
-    result = pd.DataFrame(prediction)
+        x = format(i/len(test_dataset), '.2f')
+        print(x)
+        # x 가 진행정도
+
+    result = pd.DataFrame(prediction, columns=['animal_behavior'])
 
     csv_path = os.path.join(settings.MEDIA_ROOT, 'Predicted Files')
     if not os.path.exists(csv_path):
@@ -126,7 +128,7 @@ def predict(request, id):
     csv_path2 = f'{csv_path}/{request.user.username}_{mouse_name}_behaviour_sequence.xlsx'
     # saving cvs file
     result.to_excel(csv_path2)
-    return render(request, "download.html", context={"key": key})
+    return visualization(request, key)
 
 
 def visualization(request, id):
@@ -138,7 +140,7 @@ def visualization(request, id):
     file_path = f'{settings.MEDIA_ROOT}/Predicted Files/{request.user.username}_{mouse_name}_behaviour_sequence.xlsx'
     excel_file = pd.read_excel(file_path)
     #frame_labels = excel_file['labels']
-    frame_labels = excel_file[0]
+    frame_labels = excel_file['animal_behavior']
     #frames_num = pd.DataFrame([(i + 1) * frame_rate for i in len(range(frame_labels))])
     # frequency of predicted labels
     predicted_lab_freq_dict = {i: len(frame_labels[frame_labels == i]) for i in classes}
@@ -146,9 +148,11 @@ def visualization(request, id):
     s = np.sum(predicted_lab_freq)
     relative_freq_dict = [format((( i * 100) / s), '.2f') for i in predicted_lab_freq_dict.values()]
     relative_freq_array = np.array(relative_freq_dict)
+    print(relative_freq_array)
 
-
-    plt.figure(figsize=(15, 15))
+    #plt.figure(figsize=(15, 15))
+    plt.figure()
+    plt.rcParams.update({'font.size': 8})
     plt.subplot()
     plt.title("Relative frequency distribution of animal behavior")
     plt.pie(relative_freq_array, labels=classes)
@@ -159,17 +163,19 @@ def visualization(request, id):
     plt.savefig(plot_path1)
 
     # bar plot
-    plt.figure(figsize=(15, 15))
+    #plt.figure(figsize=(15, 15))
+    plt.figure()
     plt.subplot()
     sns.histplot(frame_labels, color='red', pmax=np.max(predicted_lab_freq))
-    plt.xticks(rotation=75)
+    plt.xticks(rotation=5)
     plt.xlabel("Behavior")
     plt.ylabel("Frequency of behavior")
     plt.title("Frequency of behavior sequence")
     plot_path2 = os.path.join(plot_path, f'{request.user.username}_{mouse_name}_hist_plot.png')
     plt.savefig(plot_path2)
 
-    plt.figure(figsize=(15, 15))
+    #plt.figure(figsize=(15, 15))
+    plt.figure()
     plt.subplot()
     # creating sequence for all class
     all_binary_sequence = [np.uint8(frame_labels == i) for i in classes]
@@ -183,7 +189,8 @@ def visualization(request, id):
     plot_path3 = os.path.join(plot_path, f'{request.user.username}_{mouse_name}_sequence_plot.png')
     plt.savefig(plot_path3)
 
-    plt.figure(figsize=(15, 15))
+    #plt.figure(figsize=(15, 15))
+    plt.figure()
     plt.subplot()
     for i in range(len(all_binary_sequence)):
         seq = [k * (i + 1) if k != 0 else k + i for k in all_binary_sequence[i]]
