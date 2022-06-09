@@ -9,8 +9,6 @@ app_name = "videoupload"
 urlpatterns = [
     path("", uploadFile, name="uploadFile"),
     path('download/<int:id>/', download, name="download"),
-    path('predict/<int:id>/', predict, name="predict"),
-    path('visualization/<int:id>/', visualization, name="visualization"),
 ]
 
 
