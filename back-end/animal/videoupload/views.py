@@ -143,19 +143,20 @@ def visualization(request, id):
     frame_labels = excel_file['animal_behavior']
     #frames_num = pd.DataFrame([(i + 1) * frame_rate for i in len(range(frame_labels))])
     # frequency of predicted labels
-    predicted_lab_freq_dict = {i: len(frame_labels[frame_labels == i]) for i in classes}
+
+    pie_labels = frame_labels.unique()
+    predicted_lab_freq_dict = {i: len(frame_labels[frame_labels == i]) for i in pie_labels}
     predicted_lab_freq = list(predicted_lab_freq_dict.values())
     s = np.sum(predicted_lab_freq)
-    relative_freq_dict = [format((( i * 100) / s), '.2f') for i in predicted_lab_freq_dict.values()]
+    relative_freq_dict = [format(((i * 100) / s), '.2f') for i in predicted_lab_freq_dict.values()]
     relative_freq_array = np.array(relative_freq_dict)
-    print(relative_freq_array)
 
     #plt.figure(figsize=(15, 15))
     plt.figure()
     plt.rcParams.update({'font.size': 8})
     plt.subplot()
     plt.title("Relative frequency distribution of animal behavior")
-    plt.pie(relative_freq_array, labels=classes)
+    plt.pie(relative_freq_array, labels=pie_labels)
     plot_path = os.path.join(settings.MEDIA_ROOT, 'Visual Files')
     if not os.path.exists(plot_path):
         os.makedirs(plot_path)
@@ -202,5 +203,5 @@ def visualization(request, id):
     plot_path4 = os.path.join(plot_path, f'{request.user.username}_{mouse_name}_sequence_plot2.png')
     plt.savefig(plot_path4)
 
-    return redirect('/')
+    return render(request, "download.html", {'key':key})
 
