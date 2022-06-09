@@ -70,3 +70,7 @@ div > strong {
 .Upload {
     display:flex;
 }
+
+.Result {
+    margin-bottom: 80px;
+}

@@ -5,7 +5,9 @@ import "swiper/css";
 import "swiper/css/effect-cards";
 
 // import required modules
-import { EffectCards } from "swiper";
+import SwiperCore, { EffectCards, Keyboard } from "swiper";
+
+SwiperCore.use([Keyboard]);
 
 const ResultDetail = ({title}) => {
     return (
@@ -22,7 +24,6 @@ const ResultDetail = ({title}) => {
 }
 
 
-
 const Result = () => {
     return (
         <div class = "Result">
@@ -37,6 +38,9 @@ const Result = () => {
                     grabCursor={true}
                     modules={[EffectCards]}
                     className="mySwiper"
+                    keyboard={{
+                        enabled: true
+                    }}
                 >
                     <SwiperSlide><h1>Chart</h1></SwiperSlide>
                     <SwiperSlide><ResultDetail title = "Pie Chart" /></SwiperSlide>
