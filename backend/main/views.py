@@ -6,7 +6,7 @@ from django.http import Http404
 from .serializers import DocumentSerializer
 from .models import Document
 
-class Register(APIView):
+class MainRegister(APIView):
     def get(self, request):
         documents = Document.objects.all()
 
