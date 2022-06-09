@@ -18,8 +18,7 @@ class Register(APIView):
             data=request.data)
 
         if serializer.is_valid():
-            if len(serializer.validated_data['password']) > 7:
-                serializer.save()
-                return Response(serializer.data, status = status.HTTP_201_CREATED)
-
+            serializer.save()
+            return Response(serializer.data, status = status.HTTP_201_CREATED)
+            
         return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
