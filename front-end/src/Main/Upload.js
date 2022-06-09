@@ -10,7 +10,7 @@ const Option = ({optionName, dbName, example}) => {
     </div>
   );
 }
-
+const Upload = () => {
   const [upload, setUpload] = useState(false);
   const [Mouse_name, setMouse_name] = useState("");
   const [Experimental_model, setExperimental_model] = useState("");
@@ -29,26 +29,27 @@ const Option = ({optionName, dbName, example}) => {
           </div>
         </label>
         <input type="file" name="uploadedFile" class = "uploadedFile" id = "drop" accept=".mp4, .avi"
-        onChange = {(video) => setUploadedFile(video.target.files)}/>
+        onChange = {(video) => setUploadedFile(video.target.files[0])}/>
       </div>
+      <div class = "right">
         <div class = "option">
          <input type="text" name =  "mouse_name" placeholder = "ex) Jerry"
-         onChange={(text1) => setPassword(text1.target.value)}/>
+         onChange={(text1) => setMouse_name(text1.target.value)}/>
          <div> "Mouse Name" </div>
         </div>
         <div class = "option">
          <input type="text" name = "experimental_model" placeholder = "ex) Drug Diseased"
-          onChange={(text2) => setPassword(text2.target.value)}/>
+          onChange={(text2) => setExperimental_model(text2.target.value)}/>
          <div> "Experiment Model" </div>
         </div>
         <div class = "option">
-         <input type="text" name = {dbName} "heredity" = "ex)  Agouti"
-         onChange={(text3) => setPassword(text3.target.value)}/>
+         <input type="text" name = "heredity" placeholder = "ex)  Agouti"
+         onChange={(text3) => setHeredity(text3.target.value)}/>
          <div> "Heredity" </div>
         </div>
         <div class = "option">
-         <input type="text" name = {dbName} "genotype" = "ex)  Sox9"
-         onChange={(text4) => setPassword(text4.target.value)}/>
+         <input type="text" name = "genotype" placeholder = "ex)  Sox9"
+         onChange={(text4) => setGenotype(text4.target.value)}/>
          <div> "Genotype" </div>
         </div>
         <input type = "submit" value = "UPLOAD" class = "submit"
@@ -56,12 +57,13 @@ const Option = ({optionName, dbName, example}) => {
                             mouse_name: Mouse_name,
                             experimental_model: Experimental_model,
                             heredity: Heredity,
-                            genotype: Genotype,
-                            uploadedFile : UploadedFile})
+                            genotype: Genotype
+                            //uploadedFile : UploadedFile
+                            })
         }/>
       </div>
     </div>
-  );
+  )
 }
 
 export default Upload;
