@@ -52,6 +52,7 @@
     text-align: left;
     margin-left: 8px;
     font-style: italic;
+    display: flex;
 }
 
 .bttn > button {
@@ -62,7 +63,7 @@
 }
 
 .pwcheck {
-    text-align: right;
+    display: flex;
 }
 
 .pwcheck > input {
@@ -71,9 +72,19 @@
     border: none;
     border-radius: 15px;
     margin-right: 10px;
+    position: absolute;
+    left: 203px;
 }
 
 .bttn > button:hover {
     background-color: rgb(255, 235, 239);
     cursor: pointer;
+}
+
+.errRegister {
+    color: rgb(53, 0, 0);
+    font-style: italic;
+    font-size: 14px;
+    font-weight: 600;
+    margin-left: 10px;
 }

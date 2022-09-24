@@ -9,7 +9,7 @@
 
 ### Requires
 - Frontend: React (+ swiper.js, axios)
-- Bakend: Django
+- Backend: Django
 
 ## Requirements
 Django==4.0.5
