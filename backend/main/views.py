@@ -18,8 +18,63 @@ class MainRegister(APIView):
     def get(self, request):
         documents = Document.objects.all()
 
+<<<<<<< HEAD:backend/main/views.py
         serializer = DocumentSerializer(documents, many=True)
         return Response(serializer.data)
+=======
+class DocumentListCreate(generics.ListCreateAPIView):
+    queryset = Document.objects.all()
+    serializer_class = DocumentSerializer
+
+def uploadFile(request):
+    if request.method == "POST":
+        if request.user.is_authenticated:
+            if 'uploadedFile' in request.FILES:
+                # Fetching the form data
+                mouse_name = request.POST["mouse_name"]
+                experimental_model = request.POST["experimental_model"]
+                Heredity = request.POST["Heredity"]
+                Genotype= request.POST["Genotype"]
+                uploadedFile = request.FILES["uploadedFile"]
+                user = request.user
+                # Saving the information in the database
+                document = Document(
+                    mouse_name=mouse_name,
+                    experimental_model = experimental_model,
+                    Heredity = Heredity,
+                    Genotype = Genotype,
+                    uploadedFile = uploadedFile,
+                    user = user,
+                )
+                document.save()
+                key = document.pk
+                return predict(request,key)
+            else:
+                messages.add_message(
+                    request,
+                    messages.ERROR,
+                    'Input not exist'
+                )
+                return render(request, "video_upload.html")
+        else:
+            messages.add_message(
+                request,
+                messages.ERROR,
+                'Login First'
+            )
+            return render(request, "video_upload.html")
+    return render(request, "video_upload.html")
+
+
+def download(request, id):
+    file = Document.objects.get(id=id)
+    file_path = os.path.join(settings.MEDIA_ROOT, f'Predicted Files/{request.user.username}_{file.mouse_name}_behaviour_sequence.xlsx')
+    path = FileResponse(open(file_path, 'rb'))
+    mime_type, _ = mimetypes.guess_type(file_path)
+    response = HttpResponse(path, mime_type)
+    response['Content-Disposition'] = f'attachment;filename={file.mouse_name}.xlsx'
+    return response
+>>>>>>> origin/main:back-end/animal/videoupload/views.py
 
     def post(self, request):
         serializer = DocumentSerializer(
@@ -91,6 +146,10 @@ def predict(request, id):
     # saving cvs file
     result.to_excel(csv_path2)
     return visualization(request, key)
+<<<<<<< HEAD:backend/main/views.py
+=======
+
+>>>>>>> origin/main:back-end/animal/videoupload/views.py
 
 def visualization(request, id):
     # file path = csv file path
@@ -112,6 +171,10 @@ def visualization(request, id):
     relative_freq_dict = [format(((i * 100) / s), '.2f') for i in predicted_lab_freq_dict.values()]
     relative_freq_array = np.array(relative_freq_dict)
 
+<<<<<<< HEAD:backend/main/views.py
+=======
+    #plt.figure(figsize=(15, 15))
+>>>>>>> origin/main:back-end/animal/videoupload/views.py
     plt.figure()
     plt.rcParams.update({'font.size': 8})
     plt.subplot()
@@ -124,6 +187,10 @@ def visualization(request, id):
     plt.savefig(plot_path1)
 
     # bar plot
+<<<<<<< HEAD:backend/main/views.py
+=======
+    #plt.figure(figsize=(15, 15))
+>>>>>>> origin/main:back-end/animal/videoupload/views.py
     plt.figure()
     plt.subplot()
     sns.histplot(frame_labels, color='red', pmax=np.max(predicted_lab_freq))
@@ -134,6 +201,10 @@ def visualization(request, id):
     plot_path2 = os.path.join(plot_path, f'{request.user.username}_{mouse_name}_hist_plot.png')
     plt.savefig(plot_path2)
 
+<<<<<<< HEAD:backend/main/views.py
+=======
+    #plt.figure(figsize=(15, 15))
+>>>>>>> origin/main:back-end/animal/videoupload/views.py
     plt.figure()
     plt.subplot()
     # creating sequence for all class
@@ -148,6 +219,10 @@ def visualization(request, id):
     plot_path3 = os.path.join(plot_path, f'{request.user.username}_{mouse_name}_sequence_plot.png')
     plt.savefig(plot_path3)
 
+<<<<<<< HEAD:backend/main/views.py
+=======
+    #plt.figure(figsize=(15, 15))
+>>>>>>> origin/main:back-end/animal/videoupload/views.py
     plt.figure()
     plt.subplot()
     for i in range(len(all_binary_sequence)):
@@ -160,6 +235,7 @@ def visualization(request, id):
     plot_path4 = os.path.join(plot_path, f'{request.user.username}_{mouse_name}_sequence_plot2.png')
     plt.savefig(plot_path4)
 
+<<<<<<< HEAD:backend/main/views.py
 
 def download(request):
     file = Document.objects.get(id=len(Document.objects.all())-1)
@@ -169,4 +245,7 @@ def download(request):
     response = HttpResponse(path, mime_type)
     response['Content-Disposition'] = f'attachment;filename={file.mouse_name}.xlsx'
     return response
+=======
+    return render(request, "download.html", {'key':key})
+>>>>>>> origin/main:back-end/animal/videoupload/views.py
 
