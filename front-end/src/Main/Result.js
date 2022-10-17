@@ -13,7 +13,6 @@ const ResultDetail = ({title}) => {
     return (
         <div class = "resultDetail">
             <div class = "image">
-                <img src = 'public/',{mouse_name}_{title},'png' = "Waiting for Result"></img>
             </div>
             <div class = "text_r">
                 <div> {title} <sup>improved</sup></div>
